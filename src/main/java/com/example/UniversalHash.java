@@ -9,7 +9,7 @@ public class UniversalHash {
     private final long a;
     private final long b;
     private final long p; // A large prime
-    private final int m;  // Hash table size (output range)
+    private final long m;  // Hash table size (output range)
 
     /**
      * Default prime: 2^61 - 1, a Mersenne prime
@@ -21,7 +21,7 @@ public class UniversalHash {
      * @param m Hash table size
      * @param seed A fixed seed for deterministic behavior
      */
-    public UniversalHash(int m, Random rand) {
+    public UniversalHash(long m, Random rand) {
         this.m = m;
         this.p = (1L << 31) - 1;
         this.a = rand.nextInt((int)(p - 1)) + 1;
@@ -32,7 +32,7 @@ public class UniversalHash {
      * Constructs a universal hash function with default randomness.
      * @param m Hash table size
      */
-    public UniversalHash(int m) {
+    public UniversalHash(long m) {
         this(m, new Random(), DEFAULT_P);
     }
 
@@ -43,7 +43,7 @@ public class UniversalHash {
      * @param b Increment coefficient
      * @param p Prime modulus
      */
-    public UniversalHash(int m, long a, long b, long p) {
+    public UniversalHash(long m, long a, long b, long p) {
         this.m = m;
         this.a = a;
         this.b = b;
@@ -53,7 +53,7 @@ public class UniversalHash {
     /**
      * Internal constructor for seeding and randomness control.
      */
-    private UniversalHash(int m, Random rand, long p) {
+    private UniversalHash(long m, Random rand, long p) {
         this.m = m;
         this.p = p;
         this.a = (Math.abs(rand.nextLong()) % (p - 1)) + 1;
@@ -63,14 +63,14 @@ public class UniversalHash {
     /**
      * Hashes a string key into the range [0, m - 1].
      */
-    public int hash(String key) {
+    public long hash(String key) {
         if (key == null) {
             throw new IllegalArgumentException("Key cannot be null");
         }
 
         long hashValue = computePolynomialHash(key);
         long universalHash = ((a * hashValue) % p + b) % p;
-        int finalHash = (int)(universalHash % m);
+        long finalHash = (long)(universalHash % m);
 
         return finalHash < 0 ? finalHash + m : finalHash;
     }

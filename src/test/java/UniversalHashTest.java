@@ -194,6 +194,7 @@
 //     }
 // }
 
+import com.example.On2_implementation;
 import com.example.UniversalHash;
 
 import org.junit.jupiter.api.Test;
@@ -220,7 +221,7 @@ public class UniversalHashTest {
         int m = 1000;
         UniversalHash hash = new UniversalHash(m, rand);
 
-        int hashedValue = hash.hash(key);
+        long hashedValue = hash.hash(key);
         assertTrue(hashedValue >= 0 && hashedValue < m);
     }
 
@@ -233,7 +234,7 @@ public class UniversalHashTest {
     @Test
     public void testEmptyString() {
         UniversalHash hash = new UniversalHash(500, new Random(FIXED_SEED));
-        int h = hash.hash("");
+        long h = hash.hash("");
         assertTrue(h >= 0 && h < 500);
     }
 
@@ -244,7 +245,7 @@ public class UniversalHashTest {
         for (int i = 0; i < 1000; i++) {
             sb.append("x");
         }
-        int h = hash.hash(sb.toString());
+        long h = hash.hash(sb.toString());
         assertTrue(h >= 0 && h < 10_000);
     }
 
@@ -253,7 +254,7 @@ public class UniversalHashTest {
     public void testIntegerConvertedToString(int x) {
         UniversalHash hash = new UniversalHash(1000, new Random(FIXED_SEED));
         String key = intToStringKey(x);
-        int h = hash.hash(key);
+        long h = hash.hash(key);
         assertTrue(h >= 0 && h < 1000);
     }
 
@@ -261,8 +262,8 @@ public class UniversalHashTest {
     @ValueSource(strings = {"samekey", "SAMEKEY", "SameKey"})
     public void testConsistency(String input) {
         UniversalHash hash = new UniversalHash(500, new Random(FIXED_SEED));
-        int h1 = hash.hash(input);
-        int h2 = hash.hash(input);
+        long h1 = hash.hash(input);
+        long h2 = hash.hash(input);
         assertEquals(h1, h2);
     }
 
@@ -271,8 +272,8 @@ public class UniversalHashTest {
     public void testDifferentInputs(String k1, String k2) {
         // Test that different strings give different hashes
         UniversalHash hash = new UniversalHash(1000, new Random(FIXED_SEED));
-        int h1 = hash.hash(k1);
-        int h2 = hash.hash(k2);
+        long h1 = hash.hash(k1);
+        long h2 = hash.hash(k2);
         assertNotEquals(h1, h2);
     }
 
@@ -283,12 +284,12 @@ public class UniversalHashTest {
         int m = 1500;
         int numKeys = 1000;
         UniversalHash hash = new UniversalHash(m, rand);
-        Set<Integer> seen = new HashSet<>();
+        Set<Long> seen = new HashSet<>();
         int collisions = 0;
 
         for (int i = 0; i < numKeys; i++) {
             String key = "key" + i;
-            int h = hash.hash(key);
+            long h = hash.hash(key);
             if (!seen.add(h)) {
                 collisions++;
             }
@@ -313,18 +314,18 @@ public class UniversalHashTest {
     public void testDistributionEvenness() {
         int m = 1000;
         int n = 10000;
-        int[] buckets = new int[m];
+        int [] buckets = new int[m];
         UniversalHash hash = new UniversalHash(m, new Random(FIXED_SEED));
     
-        for (int i = 0; i < n; i++) {
+        for (long i = 0; i < n; i++) {
             String key = UUID.randomUUID().toString();
-            int h = hash.hash(key);
-            buckets[h]++;
+            long h = hash.hash(key);
+            buckets[(int)(h)]++;
         }
     
         double avg = n / (double) m;
         double variance = 0;
-        for (int count : buckets) {
+        for (long count : buckets) {
             variance += Math.pow(count - avg, 2);
         }
         variance /= m;
@@ -339,11 +340,11 @@ public class UniversalHashTest {
 
         for (int i = 0; i < numFunctions; i++) {
             UniversalHash hash = new UniversalHash(m, rand);
-            Set<Integer> hashedSet = new HashSet<>();
+            Set<Long> hashedSet = new HashSet<>();
 
             for (int j = 0; j < n; j++) {
                 String key = "key" + rand.nextInt(10000);
-                int hashValue = hash.hash(key);
+                long hashValue = hash.hash(key);
                 if (!hashedSet.add(hashValue)) {
                     totalCollisions++;
                 }
@@ -351,5 +352,59 @@ public class UniversalHashTest {
         }
 
         return (double) totalCollisions / (n * numFunctions);
+    }
+
+
+
+    /// /on^2 tests
+
+    private List<String> generateTernaryWords(int length) {
+        List<String> result = new ArrayList<>();
+        char[] chars = {'a', 'b', 'c'};
+        generateRecursive("", length, chars, result);
+        return result;
+    }
+
+    private void generateRecursive(String prefix, int length, char[] chars, List<String> result) {
+        if (length == 0) {
+            result.add(prefix);
+            return;
+        }
+        for (char c : chars) {
+            generateRecursive(prefix + c, length - 1, chars, result);
+        }
+    }
+
+
+    @Test
+    public void testSmallSet() {
+        List<String> words = List.of("dog", "cat", "fish", "bird", "frog", "lion");
+        On2_implementation impl = new On2_implementation(words.size(), words);
+
+        for (String word : words) {
+            System.out.println(word + "-> " + impl.getHash(word));
+        }
+        System.out.println("Rehashes for 6: " + impl.rehashCount);
+    }
+
+    @Test
+    public void testMediumSet_3pow5() {
+        List<String> words = generateTernaryWords(5); // 3^5 = 243
+        On2_implementation impl = new On2_implementation(words.size(), words);
+        System.out.println("Rehashes for 3^5: " + impl.rehashCount);
+    }
+
+    @Test
+    public void testLargeSet_3pow7() {
+        List<String> words = generateTernaryWords(7); // 3^7 = 2187
+        On2_implementation impl = new On2_implementation(words.size(), words);
+        System.out.println("Rehashes for 3^7: " + impl.rehashCount);
+    }
+
+    @Test
+    public void testVeryLargeSet_3pow10() {
+        List<String> words = generateTernaryWords(10); // 3^10 = 59049
+        On2_implementation impl = new On2_implementation(words.size(), words);
+        System.out.println("Rehashes for 3^10: " + impl.rehashCount);
     }
 }
