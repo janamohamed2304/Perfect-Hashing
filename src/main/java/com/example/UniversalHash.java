@@ -6,8 +6,8 @@ import java.util.Random;
  * Supports deterministic construction via seed or explicit parameters.
  */
 public class UniversalHash {
-    private final long a;
-    private final long b;
+    public final long a;
+    public final long b;
     private final long p; // A large prime
     private final long m;  // Hash table size (output range)
 

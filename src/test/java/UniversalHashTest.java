@@ -355,12 +355,9 @@ public class UniversalHashTest {
     }
 
 
-
-    /// /on^2 tests
-
-    private List<String> generateTernaryWords(int length) {
+    private List<String> generateinput(int length) {
         List<String> result = new ArrayList<>();
-        char[] chars = {'a', 'b', 'c'};
+        char[] chars = {'a', 'b', 'c','d','e','f','g','h','i','j'};
         generateRecursive("", length, chars, result);
         return result;
     }
@@ -375,36 +372,77 @@ public class UniversalHashTest {
         }
     }
 
-
     @Test
     public void testSmallSet() {
         List<String> words = List.of("dog", "cat", "fish", "bird", "frog", "lion");
-        On2_implementation impl = new On2_implementation(words.size(), words);
+        long start = System.currentTimeMillis();
+        On2_implementation impl = new On2_implementation(words.size());
 
         for (String word : words) {
-            System.out.println(word + "-> " + impl.getHash(word));
+            impl.insert(word);
         }
-        System.out.println("Rehashes for 6: " + impl.rehashCount);
+
+        long end = System.currentTimeMillis();
+
+        for (String word : words) {
+            System.out.println(word + " -> " + impl.getHash(word));
+        }
+
+        for (int i = 0; i < impl.table.length; i++) {
+//            if (impl.table[i] != null) {
+                System.out.println(i + ": " + impl.table[i]);
+//            }
+        }
+
+        System.out.println("Rehashes for 6 words: " + impl.rehashCount);
+        System.out.println("Time taken: " + (end - start) + "ms");
     }
 
     @Test
     public void testMediumSet_3pow5() {
-        List<String> words = generateTernaryWords(5); // 3^5 = 243
-        On2_implementation impl = new On2_implementation(words.size(), words);
-        System.out.println("Rehashes for 3^5: " + impl.rehashCount);
+        List<String> words = generateinput(1); // 10^1
+        long start = System.currentTimeMillis();
+        On2_implementation impl = new On2_implementation(words.size());
+
+        for (String word : words) {
+            impl.insert(word);
+        }
+
+        long end = System.currentTimeMillis();
+
+        System.out.println("Rehashes for  100 words: " + impl.rehashCount);
+        System.out.println("Time taken: " + (end - start) + "ms");
     }
 
     @Test
     public void testLargeSet_3pow7() {
-        List<String> words = generateTernaryWords(7); // 3^7 = 2187
-        On2_implementation impl = new On2_implementation(words.size(), words);
-        System.out.println("Rehashes for 3^7: " + impl.rehashCount);
+        List<String> words = generateinput(2); // 10^2
+        long start = System.currentTimeMillis();
+        On2_implementation impl = new On2_implementation(words.size());
+
+        for (String word : words) {
+            impl.insert(word);
+        }
+
+        long end = System.currentTimeMillis();
+
+        System.out.println("Rehashes for 1000 words: " + impl.rehashCount);
+        System.out.println("Time taken: " + (end - start) + "ms");
     }
 
     @Test
     public void testVeryLargeSet_3pow10() {
-        List<String> words = generateTernaryWords(10); // 3^10 = 59049
-        On2_implementation impl = new On2_implementation(words.size(), words);
-        System.out.println("Rehashes for 3^10: " + impl.rehashCount);
+        List<String> words = generateinput(3); //10^3
+        long start = System.currentTimeMillis();
+        On2_implementation impl = new On2_implementation(words.size());
+
+        for (String word : words) {
+            impl.insert(word);
+        }
+
+        long end = System.currentTimeMillis();
+
+        System.out.println("Rehashes for 1000: " + impl.rehashCount);
+        System.out.println("Time taken: " + (end - start) + "ms");
     }
 }
