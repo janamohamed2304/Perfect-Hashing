@@ -3,7 +3,7 @@ package com.example;
 import java.util.Arrays;
 import java.util.List;
 
-public class On2_implementation {
+public class On2_implementation implements Dictionary { 
     private UniversalHash universalHash;
     public long tableSize;
     public final String[] table;
