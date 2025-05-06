@@ -5,9 +5,10 @@ import java.util.List;
 
 public class On2_implementation {
     private UniversalHash universalHash;
-    private final long tableSize;
+    public long tableSize;
     public final String[] table;
     public int rehashCount = 0;
+    public int numelements = 0;
 
     public On2_implementation(long maxWords) {
         this.tableSize = maxWords * maxWords;
@@ -19,7 +20,9 @@ public class On2_implementation {
     private void rehash(List<String> words) {
         boolean collisionFree = false;
 
+
         while (!collisionFree) {
+            //System.out.println("rehash secondary");
             rehashCount++;
             Arrays.fill(table, null);
             universalHash = new UniversalHash(tableSize);
@@ -45,12 +48,14 @@ public class On2_implementation {
         long hash = universalHash.hash(word);
         if (table[(int) hash] == null) {
             table[(int) hash] = word;
+            numelements++;
             return true;
         }
 
         List<String> currentWords = getAllWords();
         currentWords.add(word);
         rehash(currentWords);
+        numelements++;
         return true;
     }
 
@@ -59,6 +64,7 @@ public class On2_implementation {
         long hash = universalHash.hash(word);
         if (word.equals(table[(int) hash])) {
             table[(int) hash] = null;
+            numelements--;
             return true;
         }
         return false;
@@ -73,7 +79,7 @@ public class On2_implementation {
         return universalHash.hash(word);
     }
 
-    private java.util.List<String> getAllWords() {
+    public java.util.List<String> getAllWords() {
         java.util.List<String> words = new java.util.ArrayList<>();
         for (String word : table) {
             if (word != null) {
@@ -81,6 +87,28 @@ public class On2_implementation {
             }
         }
         return words;
+    }
+
+    public void Batch_Insert(String[] batch){
+        for(int i=0 ; i<batch.length ; i++){
+            boolean flag = insert(batch[i]);
+            if(flag){
+                System.out.println("Line "+ (i+1) + " insert successfully");
+            }else{
+                System.out.println("Line "+ (i+1) + " insert failed");
+            }
+        }
+    }
+
+    public void Batch_Delete(String[] batch){
+        for(int i=0 ; i<batch.length ; i++){
+            boolean flag = delete(batch[i]);
+            if(flag){
+                System.out.println("Line "+ (i+1) + " delete successfully");
+            }else{
+                System.out.println("Line "+ (i+1) + " delete failed");
+            }
+        }
     }
 
 
