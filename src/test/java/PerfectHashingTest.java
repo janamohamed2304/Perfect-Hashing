@@ -28,7 +28,7 @@ public class PerfectHashingTest {
     public void QuadraticSpaceSmallSet() {
         List<String> words = List.of("dog", "cat", "fish", "bird", "frog", "lion");
         long start = System.currentTimeMillis();
-        On2_implementation impl = new On2_implementation(words.size());
+        On2_implementation impl = new On2_implementation(1);
 
         for (String word : words) {
             impl.insert(word);
@@ -54,7 +54,7 @@ public class PerfectHashingTest {
     public void QuadraticSpaceMediumSet() {
         List<String> words = generateinput(1); // 10^1
         long start = System.currentTimeMillis();
-        On2_implementation impl = new On2_implementation(words.size());
+        On2_implementation impl = new On2_implementation(1);
 
         for (String word : words) {
             impl.insert(word);
@@ -70,7 +70,7 @@ public class PerfectHashingTest {
     public void QuadraticSpaceLargeSet() {
         List<String> words = generateinput(2); // 10^2
         long start = System.currentTimeMillis();
-        On2_implementation impl = new On2_implementation(words.size());
+        On2_implementation impl = new On2_implementation(100);
 
         for (String word : words) {
             impl.insert(word);
@@ -86,7 +86,7 @@ public class PerfectHashingTest {
     public void QuadraticSpaceVeryLargeSet() {
         List<String> words = generateinput(3); //10^3
         long start = System.currentTimeMillis();
-        On2_implementation impl = new On2_implementation(words.size());
+        On2_implementation impl = new On2_implementation(100);
 
         for (String word : words) {
             impl.insert(word);

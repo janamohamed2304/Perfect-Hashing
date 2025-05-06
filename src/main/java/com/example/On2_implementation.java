@@ -6,7 +6,7 @@ import java.util.List;
 public class On2_implementation implements Dictionary { 
     private UniversalHash universalHash;
     public long tableSize;
-    public final String[] table;
+    public String[] table;
     public int rehashCount = 0;
     public int numelements = 0;
 
@@ -19,10 +19,10 @@ public class On2_implementation implements Dictionary {
 
     private void rehash(List<String> words) {
         boolean collisionFree = false;
-
+        System.out.println("enter rehash secondry");
 
         while (!collisionFree) {
-            //System.out.println("rehash secondary");
+            System.out.println("while rehash secondary");
             rehashCount++;
             Arrays.fill(table, null);
             universalHash = new UniversalHash(tableSize);
@@ -39,7 +39,7 @@ public class On2_implementation implements Dictionary {
                 table[(int) hash] = word;
             }
         }
-        rehashCount--;
+        //rehashCount--;
     }
 
     public boolean insert(String word) {
@@ -51,6 +51,24 @@ public class On2_implementation implements Dictionary {
             numelements++;
             return true;
         }
+
+
+        long size = numelements * numelements;
+        if(size >= tableSize){
+            List<String> currentWords = getAllWords();
+            currentWords.add(word);
+            if(size == 1){
+                tableSize = 4;
+            }else{
+                tableSize = size;
+            }
+            table = new String[(int)tableSize];
+            Arrays.fill(table, null);
+            rehash(currentWords);
+            numelements++;
+            return true;
+        }
+
 
         List<String> currentWords = getAllWords();
         currentWords.add(word);
@@ -115,22 +133,25 @@ public class On2_implementation implements Dictionary {
 
     public static void main(String[] args) {
         int intialSize = 5;
-        On2_implementation dict = new On2_implementation(5);
+        On2_implementation dict = new On2_implementation(1);
         System.out.println("Initial size: " + dict.table.length);
         System.out.println("a" +dict.universalHash.a);
         System.out.println("b" +dict.universalHash.b);
 
         dict.insert("pear");
-//        System.out.println("a" +dict.universalHash.a);
-//        System.out.println("b" +dict.universalHash.b);
+        System.out.println("a" +dict.universalHash.a);
+        System.out.println("b" +dict.universalHash.b);
+        System.out.println("size after insertion: " + dict.table.length);
         dict.insert("orange");
-//        System.out.println("a" +dict.universalHash.a);
-//        System.out.println("b" +dict.universalHash.b);
+        System.out.println("a" +dict.universalHash.a);
+        System.out.println("b" +dict.universalHash.b);
+        System.out.println("size after insertion: " + dict.table.length);
         dict.insert("grape");
-//        System.out.println("a" +dict.universalHash.a);
-//        System.out.println("b" +dict.universalHash.b);
+        System.out.println("a" +dict.universalHash.a);
+        System.out.println("b" +dict.universalHash.b);
+        System.out.println("size after insertion: " + dict.table.length);
 
-        dict.delete("pear");
+        //dict.delete("pear");
 
         System.out.println(dict.rehashCount);
 

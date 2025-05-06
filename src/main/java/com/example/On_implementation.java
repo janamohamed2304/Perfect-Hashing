@@ -32,20 +32,7 @@ public class On_implementation implements Dictionary {
 
         if (secondaryTables[(int)index] == null) {
             secondaryTables[(int)index] = new On2_implementation(1);
-       }else{
-            long size = secondaryTables[(int)index].numelements * secondaryTables[(int)index].numelements;
-            if(size >= secondaryTables[(int)index].tableSize){
-                //System.out.println("before resize secondary");
-                List<String> currentWords = secondaryTables[(int)index].getAllWords();
-                secondaryTables[(int)index] = new On2_implementation(size*2);
-                for (String s : currentWords){
-                    secondaryTables[(int)index].insert(s);
-                }
-                //System.out.println("After resize secondary");
-            }
-            //System.out.println("out from else");
-        }
-
+       }
 
 
         boolean inserted = secondaryTables[(int)index].insert(word);
@@ -53,8 +40,8 @@ public class On_implementation implements Dictionary {
 
         if (inserted) {
             numelements++;
-            // If insertion caused too many rehashes, we may need to rehash our primary table
-            if (secondaryTables[(int)index].rehashCount > 1) {
+
+            if (secondaryTables[(int)index].rehashCount > 2) {
                 rehashPrimary();
                 System.out.println("rehash primary :)");
             }
