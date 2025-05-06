@@ -9,7 +9,7 @@ public class UniversalHash {
     private final long a;   // Multiplier in universal hash — affects final distribution
     private final long b;   // Additive shift (offset/increment coefficient) — adds randomness
     private final long p;   // Prime modulus — controls arithmetic space, affects collisions
-    private final int m;    // Hash table size — determines the range of the hash function
+    private final long m;    // Hash table size — determines the range of the hash function
 
     /**
      * Default prime: 2^61 - 1, a Mersenne prime
@@ -21,7 +21,7 @@ public class UniversalHash {
      * @param m Hash table size
      * @param seed A fixed seed for deterministic behavior
      */
-    public UniversalHash(int m, Random rand) {
+    public UniversalHash(long m, Random rand) {
         this.m = m;
         this.p = (1L << 31) - 1;
         this.a = rand.nextInt((int)(p - 1)) + 1;
@@ -32,7 +32,7 @@ public class UniversalHash {
      * Constructs a universal hash function with default randomness.
      * @param m Hash table size
      */
-    public UniversalHash(int m) {
+    public UniversalHash(long m) {
         this(m, new Random(), DEFAULT_P);
     }
 
@@ -43,7 +43,7 @@ public class UniversalHash {
      * @param b Increment coefficient
      * @param p Prime modulus
      */
-    public UniversalHash(int m, long a, long b, long p) {
+    public UniversalHash(long m, long a, long b, long p) {
         this.m = m;
         this.a = a;
         this.b = b;
@@ -53,14 +53,14 @@ public class UniversalHash {
     /**
      * Internal constructor for seeding and randomness control.
      */
-    private UniversalHash(int m, Random rand, long p) {
+    private UniversalHash(long m, Random rand, long p) {
         this.m = m;
         this.p = p;
         this.a = (Math.abs(rand.nextLong()) % (p - 1)) + 1;
         this.b = Math.abs(rand.nextLong() % p);
     }
 
-    public int hash(String key) {
+    public long hash(String key) {
         if (key == null) {
             throw new IllegalArgumentException("Key cannot be null");
         }
@@ -74,7 +74,7 @@ public class UniversalHash {
         long universalHash = ((a * hashValue) % p + b) % p;
 
         // Final result in the range [0, m - 1]
-        int finalHash = (int)(universalHash % m);
+        long finalHash = (long)(universalHash % m);
         return finalHash < 0 ? finalHash + m : finalHash;   // Ensure non-negative return
 
     }
