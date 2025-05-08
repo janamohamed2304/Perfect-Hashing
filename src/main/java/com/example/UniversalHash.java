@@ -75,7 +75,7 @@ public class UniversalHash {
             return 17;    // Return a small prime if string is empty, avoids zero hash
         }
         long hash = 0;
-        final int base = 37;    // Base for polynomial roll (e.g., like x in x^i) — affects how characters are weighted by position
+        final int base = 31;    // Base for polynomial roll (e.g., like x in x^i) — affects how characters are weighted by position
         // Build the polynomial hash (key[0]*base^0 + key[1]*base^1 + key[2]*base^2 + ...) mod p
         for (int i = 0; i < key.length(); i++) {
             // Multiply and mod at every step to avoid overflow

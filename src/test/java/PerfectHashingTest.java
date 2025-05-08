@@ -54,10 +54,11 @@ public class PerfectHashingTest {
     public void QuadraticSpaceMediumSet() {
         List<String> words = generateinput(1); // 10^1
         long start = System.currentTimeMillis();
-        On2_implementation impl = new On2_implementation(1);
+        On2_implementation impl = new On2_implementation(16);
 
         for (String word : words) {
             impl.insert(word);
+            System.out.println(word + " -> " + impl.getHash(word));
         }
 
         long end = System.currentTimeMillis();
@@ -70,7 +71,7 @@ public class PerfectHashingTest {
     public void QuadraticSpaceLargeSet() {
         List<String> words = generateinput(2); // 10^2
         long start = System.currentTimeMillis();
-        On2_implementation impl = new On2_implementation(100);
+        On2_implementation impl = new On2_implementation(16);
 
         for (String word : words) {
             impl.insert(word);
@@ -86,7 +87,7 @@ public class PerfectHashingTest {
     public void QuadraticSpaceVeryLargeSet() {
         List<String> words = generateinput(3); //10^3
         long start = System.currentTimeMillis();
-        On2_implementation impl = new On2_implementation(100);
+        On2_implementation impl = new On2_implementation(16);
 
         for (String word : words) {
             impl.insert(word);
@@ -147,7 +148,7 @@ public class PerfectHashingTest {
 
     @Test
     public void linearSpaceLargeSet() {
-        List<String> words = generateinput(3); //10^3
+        List<String> words = generateinput(6); //10^3
         long start = System.currentTimeMillis();
         On_implementation impl = new On_implementation();
 

@@ -19,10 +19,9 @@ public class On2_implementation implements Dictionary {
 
     private void rehash(List<String> words) {
         boolean collisionFree = false;
-        System.out.println("enter rehash secondry");
 
         while (!collisionFree) {
-            System.out.println("while rehash secondary");
+
             rehashCount++;
             Arrays.fill(table, null);
             universalHash = new UniversalHash(tableSize);
@@ -43,13 +42,19 @@ public class On2_implementation implements Dictionary {
     }
 
     public boolean insert(String word) {
-        if (search(word)) return false;
+        if (search(word)) {
+            System.out.println("word already exists");
+            return false;
+        }
 
         long hash = universalHash.hash(word);
         if (table[(int) hash] == null) {
             table[(int) hash] = word;
+            System.out.println("inserted successfully");
             numelements++;
             return true;
+        }else{
+            System.out.println("collision detected");
         }
 
 
@@ -65,6 +70,7 @@ public class On2_implementation implements Dictionary {
             table = new String[(int)tableSize];
             Arrays.fill(table, null);
             rehash(currentWords);
+
             numelements++;
             return true;
         }

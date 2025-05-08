@@ -7,7 +7,7 @@ public class On_implementation implements Dictionary {
 
     UniversalHash primaryFunction;
     public On2_implementation[] secondaryTables;
-    public int tableSize = 100;
+    public int tableSize = 16;
     int numelements = 0;
     int rehashCount = 0;
 
@@ -65,7 +65,7 @@ public class On_implementation implements Dictionary {
         }
 
         // Increase primary table size (typically double or next prime)
-        tableSize *= 5;
+        tableSize *= 2;
         secondaryTables = new On2_implementation[tableSize];
         Arrays.fill(secondaryTables, null);
         primaryFunction = new UniversalHash(tableSize);
