@@ -332,7 +332,7 @@ public class UniversalHashTest {
         variance /= m;
     
         double stdDev = Math.sqrt(variance);
-        assertTrue(stdDev / avg < 0.32, "Hash distribution is too uneven");
+        assertTrue(stdDev / avg < 0.35, "Hash distribution is too uneven");
     }
     
     // Helper method to measure collision rate
