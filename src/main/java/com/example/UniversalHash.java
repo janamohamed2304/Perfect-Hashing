@@ -6,10 +6,10 @@ import java.util.Random;
  * Supports deterministic construction via seed or explicit parameters.
  */
 public class UniversalHash {
-    private final long a;   // Multiplier in universal hash — affects final distribution
-    private final long b;   // Additive shift (offset/increment coefficient) — adds randomness
-    private final long p;   // Prime modulus — controls arithmetic space, affects collisions
-    private final long m;    // Hash table size — determines the range of the hash function
+    public final long a;
+    public final long b;
+    private final long p; // A large prime
+    private final long m;  // Hash table size (output range)
 
     /**
      * Default prime: 2^61 - 1, a Mersenne prime
@@ -60,43 +60,44 @@ public class UniversalHash {
         this.b = Math.abs(rand.nextLong() % p);
     }
 
+    /**
+     * Hashes a string key into the range [0, m - 1].
+     */
     public long hash(String key) {
         if (key == null) {
             throw new IllegalArgumentException("Key cannot be null");
         }
 
-        // Step 1 (Polynomial)
-        // Converts the whole string into a single integer in [0, p-1]
         long hashValue = computePolynomialHash(key);
-
-        // Step 2 (Multiply-Mod-Prime: h(x) = ((a * x + b) mod p) mod m)
-        // Randomly re-maps the result to spread it evenly in [0, m)
         long universalHash = ((a * hashValue) % p + b) % p;
-
-        // Final result in the range [0, m - 1]
         long finalHash = (long)(universalHash % m);
-        return finalHash < 0 ? finalHash + m : finalHash;   // Ensure non-negative return
 
+        return finalHash < 0 ? finalHash + m : finalHash;
     }
 
-    // Polynomial: h(x) = ((a * x + b) mod p) mod m
+    /**
+     * Computes the polynomial rolling hash of a string.
+    //  */
+    // Polynomial hash function is h(x) = ((a * x + b) mod p) mod m
     private long computePolynomialHash(String key) {
         if (key == null) {
             throw new IllegalArgumentException("Key cannot be null");
         }
     
         if (key.isEmpty()) {
-            return 17;  // Return a small prime if string is empty, avoids zero hash
+            return 17; // A small prime, avoids zero hash
         }
     
         long hash = 0;
-        final int base = 37;    // Base for polynomial roll (e.g., like x in x^i) — affects how characters are weighted by position
-        // Build the polynomial hash (key[0]*base^0 + key[1]*base^1 + key[2]*base^2 + ...) mod p
+        final int base = 37;
+    
         for (int i = 0; i < key.length(); i++) {
+            // Multiply and mod at every step to avoid overflow
             hash = (hash * base + key.charAt(i)) % p;
+    
+            // Ensure hash stays non-negative
             if (hash < 0) {
-                hash += p;  // Ensure hash stays non-negative
-
+                hash += p;
             }
         }
     
