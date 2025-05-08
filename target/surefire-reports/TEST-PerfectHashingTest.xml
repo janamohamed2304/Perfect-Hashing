@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="PerfectHashingTest" time="2.27" tests="8" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.specification.version" value="21"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.class.path" value="D:\sa\Perfect-Hashing\target\test-classes;D:\sa\Perfect-Hashing\target\classes;C:\Users\Micro Systems\.m2\repository\org\junit\jupiter\junit-jupiter\5.9.3\junit-jupiter-5.9.3.jar;C:\Users\Micro Systems\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.9.3\junit-jupiter-api-5.9.3.jar;C:\Users\Micro Systems\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\Micro Systems\.m2\repository\org\junit\platform\junit-platform-commons\1.9.3\junit-platform-commons-1.9.3.jar;C:\Users\Micro Systems\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Micro Systems\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.9.3\junit-jupiter-params-5.9.3.jar;C:\Users\Micro Systems\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.9.3\junit-jupiter-engine-5.9.3.jar;C:\Users\Micro Systems\.m2\repository\org\junit\platform\junit-platform-engine\1.9.3\junit-platform-engine-1.9.3.jar;"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="https://java.oracle.com/"/>
+    <property name="user.timezone" value="Africa/Cairo"/>
+    <property name="os.name" value="Windows 10"/>
+    <property name="java.vm.specification.version" value="21"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="US"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-21\bin"/>
+    <property name="sun.java.command" value="C:\Users\Micro Systems\AppData\Local\Temp\surefire2115271468731127005\surefirebooter-20250508235657369_3.jar C:\Users\Micro Systems\AppData\Local\Temp\surefire2115271468731127005 2025-05-08T23-56-56_898-jvmRun1 surefire-20250508235657369_1tmp surefire_0-20250508235657369_2tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="D:\sa\Perfect-Hashing\target\test-classes;D:\sa\Perfect-Hashing\target\classes;C:\Users\Micro Systems\.m2\repository\org\junit\jupiter\junit-jupiter\5.9.3\junit-jupiter-5.9.3.jar;C:\Users\Micro Systems\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.9.3\junit-jupiter-api-5.9.3.jar;C:\Users\Micro Systems\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\Micro Systems\.m2\repository\org\junit\platform\junit-platform-commons\1.9.3\junit-platform-commons-1.9.3.jar;C:\Users\Micro Systems\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Micro Systems\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.9.3\junit-jupiter-params-5.9.3.jar;C:\Users\Micro Systems\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.9.3\junit-jupiter-engine-5.9.3.jar;C:\Users\Micro Systems\.m2\repository\org\junit\platform\junit-platform-engine\1.9.3\junit-platform-engine-1.9.3.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\Micro Systems"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2025-01-21"/>
+    <property name="java.home" value="C:\Program Files\Java\jdk-21"/>
+    <property name="file.separator" value="\"/>
+    <property name="basedir" value="D:\sa\Perfect-Hashing"/>
+    <property name="java.vm.compressedOopsMode" value="32-bit"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="surefire.real.class.path" value="C:\Users\Micro Systems\AppData\Local\Temp\surefire2115271468731127005\surefirebooter-20250508235657369_3.jar"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="21.0.6+8-LTS-188"/>
+    <property name="user.name" value="Micro Systems"/>
+    <property name="stdout.encoding" value="Cp1252"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="localRepository" value="C:\Users\Micro Systems\.m2\repository"/>
+    <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="C:\Users\MICROS~1\AppData\Local\Temp\"/>
+    <property name="java.version" value="21.0.6"/>
+    <property name="user.dir" value="D:\sa\Perfect-Hashing"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="native.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk-21\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Python313\Scripts\;C:\Python313\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Microsoft VS Code\bin;C:\mingw64\bin;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files\Java\jdk-21\bin;C:\apache-maven-3.9.9\bin;C:\Program Files\swipl\bin;C:\Users\Micro Systems\AppData\Local\Microsoft\WindowsApps;C:\Users\Micro Systems\AppData\Roaming\npm;C:\apache-maven-3.9.9\bin;C:\Program Files\swipl\bin;;c:\Users\Micro Systems\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\debugCommand;."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="stderr.encoding" value="Cp1252"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.version" value="21.0.6+8-LTS-188"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="65.0"/>
+  </properties>
+  <testcase name="QuadraticSpaceMediumSet" classname="PerfectHashingTest" time="0.064">
+    <system-out><![CDATA[a -> 1
+b -> 25
+c -> 17
+d -> 9
+e -> 1
+f -> 25
+g -> 17
+h -> 9
+i -> 1
+j -> 25
+Rehashes for  100 words: 0
+Time taken: 12ms
+]]></system-out>
+  </testcase>
+  <testcase name="QuadraticSpaceVeryLargeSet" classname="PerfectHashingTest" time="0.012">
+    <system-out><![CDATA[Rehashes for 1000 words: 48
+Time taken: 4ms
+]]></system-out>
+  </testcase>
+  <testcase name="QuadraticSpaceLargeSet" classname="PerfectHashingTest" time="0.007">
+    <system-out><![CDATA[Rehashes for 100 words: 17
+Time taken: 0ms
+]]></system-out>
+  </testcase>
+  <testcase name="QuadraticSpaceSmallSet" classname="PerfectHashingTest" time="0.013">
+    <system-out><![CDATA[dog -> 25
+cat -> 9
+fish -> 9
+bird -> 17
+frog -> 9
+lion -> 9
+0: null
+1: null
+2: null
+3: lion
+4: null
+5: frog
+6: null
+7: cat
+8: null
+9: fish
+10: null
+11: null
+12: null
+13: null
+14: null
+15: null
+16: null
+17: bird
+18: null
+19: null
+20: null
+21: null
+22: null
+23: null
+24: null
+25: dog
+26: null
+27: null
+28: null
+29: null
+30: null
+31: null
+Rehashes for 6 words: 2
+Time taken: 0ms
+]]></system-out>
+  </testcase>
+  <testcase name="LinearSpaceSmallSet" classname="PerfectHashingTest" time="0.03">
+    <system-out><![CDATA[dog -> 1
+cat -> 17
+fish -> 17
+bird -> 25
+frog -> 17
+lion -> 17
+At pin 1 secondary index 0: null
+At pin 1 secondary index 1: null
+At pin 1 secondary index 2: null
+At pin 1 secondary index 3: null
+At pin 1 secondary index 4: null
+At pin 1 secondary index 5: null
+At pin 1 secondary index 6: null
+At pin 1 secondary index 7: null
+At pin 1 secondary index 8: null
+At pin 1 secondary index 9: null
+At pin 1 secondary index 10: null
+At pin 1 secondary index 11: null
+At pin 1 secondary index 12: null
+At pin 1 secondary index 13: dog
+At pin 1 secondary index 14: null
+At pin 1 secondary index 15: null
+At pin 17 secondary index 0: null
+At pin 17 secondary index 1: cat
+At pin 17 secondary index 2: null
+At pin 17 secondary index 3: fish
+At pin 17 secondary index 4: null
+At pin 17 secondary index 5: frog
+At pin 17 secondary index 6: null
+At pin 17 secondary index 7: lion
+At pin 17 secondary index 8: null
+At pin 17 secondary index 9: null
+At pin 17 secondary index 10: null
+At pin 17 secondary index 11: null
+At pin 17 secondary index 12: null
+At pin 17 secondary index 13: null
+At pin 17 secondary index 14: null
+At pin 17 secondary index 15: null
+At pin 25 secondary index 0: null
+At pin 25 secondary index 1: null
+At pin 25 secondary index 2: null
+At pin 25 secondary index 3: null
+At pin 25 secondary index 4: null
+At pin 25 secondary index 5: bird
+At pin 25 secondary index 6: null
+At pin 25 secondary index 7: null
+At pin 25 secondary index 8: null
+At pin 25 secondary index 9: null
+At pin 25 secondary index 10: null
+At pin 25 secondary index 11: null
+At pin 25 secondary index 12: null
+At pin 25 secondary index 13: null
+At pin 25 secondary index 14: null
+At pin 25 secondary index 15: null
+Rehashes for 6 words: 0
+Time taken: 0ms
+]]></system-out>
+  </testcase>
+  <testcase name="testRehashingOnCollision" classname="PerfectHashingTest" time="0.017">
+    <system-out><![CDATA[TESTING REHASHING ON COLLISION:
+Inserted: abc, Rehash count: 0
+Inserted: cba, Rehash count: 0
+Inserted: bac, Rehash count: 0
+Inserted: cab, Rehash count: 0
+Inserted: acb, Rehash count: 0
+Inserted: bca, Rehash count: 1
+Search for abc: Not Found
+Search for cba: Found
+Search for bac: Found
+Search for cab: Not Found
+Search for acb: Found
+Search for bca: Found
+All words found: false
+Total rehashes: 1
+
+Final table contents:
+1: bac
+5: acb
+7: cba
+9: bca
+11: cab
+13: abc
+]]></system-out>
+  </testcase>
+  <testcase name="linearSpaceMediumSet" classname="PerfectHashingTest" time="0.01">
+    <system-out><![CDATA[Rehashes for  10 words: 0
+Time taken: 0ms
+]]></system-out>
+  </testcase>
+  <testcase name="linearSpaceLargeSet" classname="PerfectHashingTest" time="2.059">
+    <system-out><![CDATA[Rehashes for 1000000 words: 16
+Time taken: 1824ms
+]]></system-out>
+  </testcase>
+</testsuite>

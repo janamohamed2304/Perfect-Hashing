@@ -10,7 +10,7 @@ public class On_implementation implements Dictionary {
     
     // Primary hash table
     private UniversalHash primaryHash;
-    private On2_implementation[] secondaryTables;
+    public On2_implementation[] secondaryTables;
     private int tableSize;
     private int numelements = 0;
     private int rehashCount = 0;
