@@ -132,7 +132,7 @@ public class PerfectHashingTest {
 
     @Test
     public void linearSpaceMediumSet() {
-        List<String> words = generateinput(2); // 10^1
+        List<String> words = generateinput(2); // 10^2
         long start = System.currentTimeMillis();
         On_implementation impl = new On_implementation();
 
