@@ -1,82 +1,99 @@
 package com.example;
+import java.util.Random;
 
 /**
- * An optimized universal hash function implementation that prioritizes speed
- * while maintaining good collision resistance properties.
+ * A universal hash function using polynomial hashing with good distribution,
+ * revised to be more aligned with HashingFunction.java implementation.
  */
 public class UniversalHash {
-    // Mersenne prime (2^31 - 1) for good distribution characteristics
-    private static final long PRIME = 2147483647;
-    
-    // Use smaller prime for modulus (reduces computation cost)
-    private static final long HASH_MULTIPLIER = 31;
-    
-    // Parameters for universal hashing
-    public final long a;   // Multiplier coefficient
-    public final long b;   // Additive shift coefficient
-    private final long m;  // Hash table size
-    
+    public final long a;
+    public final long b;
+    private final long p; // A large prime
+    private final long m;  // Hash table size (output range)
+    private final long g; // For string hashing base multiplier
+
     /**
-     * Creates a universal hash function for the given table size.
-     * @param m The size of the hash table
+     * Default prime: 10^9 + 9, a common prime for string hashing
+     */
+    private static final long DEFAULT_P = 1000000009L;
+
+    /**
+     * Constructs a universal hash function with a random seed.
+     * @param m Hash table size
      */
     public UniversalHash(long m) {
         this.m = m;
-        // Use deterministic but distribution-friendly values for a and b
-        this.a = 25214903917L % PRIME; // From Java's Random implementation
-        this.b = System.nanoTime() % PRIME; // Use system time for some variation
+        this.p = DEFAULT_P;
+        
+        Random rand = new Random();
+        // Ensure a is not 0
+        this.a = Math.abs(rand.nextLong()) % (p - 1) + 1;
+        this.b = Math.abs(rand.nextLong()) % p;
+        
+        // Generate a prime constant for string hashing
+        // Using a prime number increases the distribution quality
+        this.g = getPrime(rand);
     }
-    
+
     /**
-     * Fully parameterized constructor (for testing or specialized usage)
+     * Get a prime number for string hashing
      */
-    public UniversalHash(long m, long a, long b) {
-        this.m = m;
-        this.a = a;
-        this.b = b;
+    private long getPrime(Random rand) {
+        // List of some common primes used for string hashing
+        long[] primes = {31, 37, 41, 53, 61, 71, 97, 103, 113, 131};
+        return primes[rand.nextInt(primes.length)];
     }
-    
+
     /**
-     * Computes the hash value for a given string.
-     * Uses a fast algorithm optimized for reduced computation while maintaining good distribution.
-     * 
-     * @param key The string to hash
-     * @return The hash value in range [0, m-1]
+     * Hashes a string key into the range [0, m - 1].
      */
     public long hash(String key) {
         if (key == null) {
-            return 0;
+            throw new IllegalArgumentException("Key cannot be null");
         }
+
+        // First get the string hash value (similar to djb2Hash in HashingFunction)
+        long stringHash = computeStringHash(key);
         
-        // Use FNV-1a hash algorithm - known to be fast and have good distribution
-        long hash = 0x811C9DC5; // FNV offset basis
+        // Apply universal hashing formula: ((a*x + b) mod p) mod m
+        long universalHash = ((a * stringHash) % p + b) % p;
         
-        // Process 4 characters at a time when possible
-        int len = key.length();
-        int i = 0;
+        // Final hash value in the range [0, m-1]
+        long finalHash = universalHash % m;
         
-        // Process character blocks of 4 when possible
-        for (; i <= len - 4; i += 4) {
-            hash ^= key.charAt(i);
-            hash *= HASH_MULTIPLIER;
-            hash ^= key.charAt(i+1);
-            hash *= HASH_MULTIPLIER;
-            hash ^= key.charAt(i+2);
-            hash *= HASH_MULTIPLIER;
-            hash ^= key.charAt(i+3);
-            hash *= HASH_MULTIPLIER;
+        // Ensure the hash is non-negative
+        return finalHash < 0 ? finalHash + m : finalHash;
+    }
+
+    /**
+     * Computes a string hash similar to djb2Hash in HashingFunction
+     */
+    private long computeStringHash(String key) {
+        if (key == null) {
+            throw new IllegalArgumentException("Key cannot be null");
         }
-        
-        // Process remaining characters
-        for (; i < len; i++) {
-            hash ^= key.charAt(i);
-            hash *= HASH_MULTIPLIER;
+    
+        if (key.isEmpty()) {
+            return 17; // A prime number, avoids zero hash
         }
-        
-        // Apply universal hashing formula to improve distribution
-        hash = ((a * hash) + b) & 0x7FFFFFFFL; // Apply a and b, mask to positive value
-        
-        // Final mod to get value in range [0, m-1]
-        return hash % m;
+    
+        long hash = 0;
+    
+        for (int i = 0; i < key.length(); i++) {
+            // Multiply and mod at every step to avoid overflow (similar to djb2Hash)
+            hash = (hash * g + key.charAt(i)) % p;
+            
+            // Ensure hash stays non-negative
+            if (hash < 0) {
+                hash += p;
+            }
+        }
+    
+        return hash;
+    }    
+
+    @Override
+    public String toString() {
+        return String.format("UniversalHash(m=%d, a=%d, b=%d, p=%d, g=%d)", m, a, b, p, g);
     }
 }
