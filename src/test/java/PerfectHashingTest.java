@@ -63,7 +63,7 @@ public class PerfectHashingTest {
 
         long end = System.currentTimeMillis();
 
-        System.out.println("Rehashes for  100 words: " + impl.rehashCount);
+        System.out.println("Rehashes for  10 words: " + impl.rehashCount);
         System.out.println("Time taken: " + (end - start) + "ms");
     }
 
@@ -132,7 +132,7 @@ public class PerfectHashingTest {
 
     @Test
     public void linearSpaceMediumSet() {
-        List<String> words = generateinput(1); // 10^1
+        List<String> words = generateinput(2); // 10^1
         long start = System.currentTimeMillis();
         On_implementation impl = new On_implementation();
 
@@ -142,7 +142,7 @@ public class PerfectHashingTest {
 
         long end = System.currentTimeMillis();
 
-        System.out.println("Rehashes for  10 words: " + impl.getRehashCount());
+        System.out.println("Rehashes for  100 words: " + impl.getRehashCount());
         System.out.println("Time taken: " + (end - start) + "ms");
     }
 
