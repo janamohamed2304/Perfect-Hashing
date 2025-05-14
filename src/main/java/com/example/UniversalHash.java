@@ -52,13 +52,13 @@ public class UniversalHash {
             throw new IllegalArgumentException("Key cannot be null");
         }
 
-        // First get the string hash value (similar to djb2Hash in HashingFunction)
+       
         long stringHash = computeStringHash(key);
         
-        // Apply universal hashing formula: ((a*x + b) mod p) mod m
+        
         long universalHash = ((a * stringHash) % p + b) % p;
         
-        // Final hash value in the range [0, m-1]
+        
         long finalHash = universalHash % m;
         
         // Ensure the hash is non-negative
@@ -66,7 +66,7 @@ public class UniversalHash {
     }
 
     /**
-     * Computes a string hash similar to djb2Hash in HashingFunction
+     * 
      */
     private long computeStringHash(String key) {
         if (key == null) {
@@ -80,10 +80,8 @@ public class UniversalHash {
         long hash = 0;
     
         for (int i = 0; i < key.length(); i++) {
-            // Multiply and mod at every step to avoid overflow (similar to djb2Hash)
             hash = (hash * g + key.charAt(i)) % p;
             
-            // Ensure hash stays non-negative
             if (hash < 0) {
                 hash += p;
             }
